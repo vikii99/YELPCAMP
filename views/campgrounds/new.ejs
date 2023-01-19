@@ -1,0 +1,53 @@
+<%- layout('layouts/boilerplate') %>
+    <h1 class="text-center">Add Campground</h1>
+    <div class="col-md-6 offset-md-3">
+        <form action="/campgrounds" method="post" novalidate class="validatedForm" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input class="form-control" type="text" name="title", id="title" placeholder="Title" required>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input class="form-control" type="text" name="location", id="location" placeholder="location" required> 
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+        </div>
+        
+        <!-- <input type="file" name="image" id="" multiple> -->
+        <!-- <div class="mb-3">
+            <label for="image" class="form-label">Image URL</label>
+            <input class="form-control" type="text" name="image", id="location" placeholder="location" required>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+        </div> -->
+        <div class="mb-3">
+            <label for="price">Price</label>
+            <div class="input-group ">
+                <span class="input-group-text">$</span>
+                <input type="text" class="form-control" id="price" name='price' placeholder="0.00" required> 
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea class="form-control" type="text" name="description", id="description" placeholder="description" required></textarea>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+        </div>
+        <div class="mb-3 custom-file">
+            <label for="image" class="form-label custom-file-label">Choose images</label>
+            <input class="form-control" type="file" id="image" name="image">
+          </div>
+        <div class="mb-3">
+            <button class="btn btn-success">Submit</button>
+        </div>    
+        </form>    
+    
