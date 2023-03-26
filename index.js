@@ -30,7 +30,7 @@ const reviewsRoutes = require('./routes/reviews')
 const usersRoutes = require('./routes/users')
 
 app.engine('ejs', ejsMate)
-mongoose.connect('mongodb://localhost:27017/yelp-camp')
+mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -153,6 +153,6 @@ app.use((err,req,res,next) => {
     res.status(status).render('error', {err})
 })
 
-app.listen(3000, ()=>{
-    console.log('on port 3000')
+app.listen(4000, ()=>{
+    console.log('on port 4000')
 })
