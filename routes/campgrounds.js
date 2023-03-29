@@ -9,18 +9,10 @@ const campgrounds = require('../controllers/campgrounds')
 const multer  = require('multer')
 const {storage} = require('../cloudinary')
 const upload = multer({storage })
+const {validateCampground} = require("../middleware")
 
 
-const validateCampground = (req,res,next) => {
-    const { error } = campgroundSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressErrors(msg,400)
-    }
-    else{
-        next()
-    }
-}
+
 
 router.route('/')
     .get( campgrounds.index )
