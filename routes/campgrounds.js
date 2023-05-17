@@ -9,7 +9,7 @@ const campgrounds = require('../controllers/campgrounds')
 const multer  = require('multer')
 const {storage} = require('../cloudinary')
 const upload = multer({storage })
-const {validateCampground} = require("../middleware")
+
 
 
 

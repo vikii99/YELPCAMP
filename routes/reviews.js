@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router({mergeParams: true})
-const { validateReview, isLoggedIn, isReviewAuthor, isAuthor } = require('../middleware');
+const { isLoggedIn, isReviewAuthor, isAuthor } = require('../middleware');
 
 const catchAsync = require('../utilities/catchAsync')
 const ExpressErrors = require('../utilities/ExpressErrors')
