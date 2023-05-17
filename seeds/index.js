@@ -2,8 +2,16 @@ const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campgrounds');
+require("dotenv").config();
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
+
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
+// 'mongodb://127.0.0.1:27017/yelp-camp';
+
+mongoose.connect(dbUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 
@@ -21,26 +29,30 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) +10;
         const camp = new Campground({
-            author: '63c3f5a3dfb7ee868232a7a2',
-            location: `${cities[random1000].city}, ${cities[random1000].state}`,
-            title: `${sample(descriptors)} ${sample(places)}`,
-            images: [
-                {
-                  url: 'https://res.cloudinary.com/dba8utuyf/image/upload/v1673949664/YelpCamp/efmjzi0pa8lrzm9ggfex.jpg',
-                  filename: 'YelpCamp/efmjzi0pa8lrzm9ggfex',
-                  
-                },
-                {
-                  url: 'https://res.cloudinary.com/dba8utuyf/image/upload/v1673949664/YelpCamp/uywondst1bmwh0tr7pzo.jpg',
-                  filename: 'YelpCamp/uywondst1bmwh0tr7pzo',
-                  
-                }
-              ],
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae accusamus id cupiditate voluptates accusantium sed velit quidem laudantium quisquam tenetur, ea consectetur! Assumenda provident quasi mollitia perferendis aspernatur esse! Perspiciatis.',
-            price,
-            geometry: { type: 'Point', coordinates: [ cities[random1000].longitude,
-                                                      cities[random1000].latitude ] }
-        })
+          author: "646390e36d0ddd8a53c477d1",
+          location: `${cities[random1000].city}, ${cities[random1000].state}`,
+          title: `${sample(descriptors)} ${sample(places)}`,
+          images: [
+            {
+              url: "https://res.cloudinary.com/dba8utuyf/image/upload/v1673945528/samples/landscapes/beach-boat.jpg",
+              filename: "samples/landscapes/beach-boat",
+            },
+            {
+              url: "https://res.cloudinary.com/dba8utuyf/image/upload/v1673949664/YelpCamp/uywondst1bmwh0tr7pzo.jpg",
+              filename: "YelpCamp/uywondst1bmwh0tr7pzo",
+            },
+          ],
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae accusamus id cupiditate voluptates accusantium sed velit quidem laudantium quisquam tenetur, ea consectetur! Assumenda provident quasi mollitia perferendis aspernatur esse! Perspiciatis.",
+          price,
+          geometry: {
+            type: "Point",
+            coordinates: [
+              cities[random1000].longitude,
+              cities[random1000].latitude,
+            ],
+          },
+        });
         await camp.save();
     }
 }

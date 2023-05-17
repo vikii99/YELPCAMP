@@ -28,17 +28,35 @@ const helmet = require('helmet')
 const campgroundsRoutes = require('./routes/campgrounds')
 const reviewsRoutes = require('./routes/reviews')
 const usersRoutes = require('./routes/users')
+const MongoDBStore = require("connect-mongo")(session)
 
+
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
+// 'mongodb://127.0.0.1:27017/yelp-camp';
 app.engine('ejs', ejsMate)
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
+mongoose.connect(dbUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(mongoSanatize())
+app.use(mongoSanatize({
+    replaceWith: '_'
+}))
 
+const store = new MongoDBStore({
+  url: dbUrl,
+  secret: process.env.SECRET,
+  thouchAfter: 24*60*60
+});
 
+store.on("error", function (e) {
+    console.log("session store error", e)
+})
 
 const sessionCon = {
+    store,
     name: 'session',
     secret: 'somethingjustlikethis',
     resave: false,
@@ -131,6 +149,7 @@ app.set('views', path.join(__dirname, 'views')  )
 app.set('view engine', 'ejs')
 
 
+
 //Routes
 app.get('/', (req,res)=> {
     res.render('home')
@@ -153,6 +172,8 @@ app.use((err,req,res,next) => {
     res.status(status).render('error', {err})
 })
 
-app.listen(4000, ()=>{
-    console.log('on port 4000')
+
+const port = process.env.PORT || 4000;
+app.listen(port, ()=>{
+    console.log(`Serving on port ${port}!!`);
 })
